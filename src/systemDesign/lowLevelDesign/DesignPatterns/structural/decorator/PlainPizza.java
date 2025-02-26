@@ -1,0 +1,13 @@
+package systemDesign.lowLevelDesign.DesignPatterns.structural.decorator;
+
+class PlainPizza implements Pizza {
+    @Override
+    public String getDescription() {
+        return "Plain Pizza";
+    }
+
+    @Override
+    public double getCost() {
+        return 5.00; // Base price of a plain pizza
+    }
+}
