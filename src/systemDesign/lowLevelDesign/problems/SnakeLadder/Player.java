@@ -2,13 +2,23 @@ package systemDesign.lowLevelDesign.problems.SnakeLadder;
 
 public class Player {
 
-    String id;
+    String name;
     int currentPosition;
 
-    public Player(String id, int currentPosition) {
-        this.id = id;
-        this.currentPosition = currentPosition;
+    public Player(String name) {
+        this.name = name;
+        this.currentPosition = 0;
     }
 
-    //getters and setters
+    public void setCurrentPosition(int pos) {
+        this.currentPosition = pos;
+    }
+
+    public int getCurrentPosition(){
+        return currentPosition;
+    }
+
+    public String getName(){
+        return name;
+    }
 }

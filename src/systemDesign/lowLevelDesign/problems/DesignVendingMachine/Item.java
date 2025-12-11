@@ -1,5 +1,7 @@
 package systemDesign.lowLevelDesign.problems.DesignVendingMachine;
 
+import systemDesign.lowLevelDesign.problems.DesignVendingMachine.enums.ItemType;
+
 public class Item {
     ItemType type;
     int price;

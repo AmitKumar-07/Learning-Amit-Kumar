@@ -1,82 +1,94 @@
 package systemDesign.lowLevelDesign.problems.DesignVendingMachine;
 
-import systemDesign.lowLevelDesign.problems.DesignVendingMachine.VendingStates.State;
+import systemDesign.lowLevelDesign.problems.DesignVendingMachine.enums.Coin;
+import systemDesign.lowLevelDesign.problems.DesignVendingMachine.enums.ItemType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
-    public static void main(String args[]){
+    public static void main(String[] args) {
 
-        VendingMachine vendingMachine = new VendingMachine();
         try {
+            VendingMachine vendingMachine = new VendingMachine();
 
-            System.out.println("|");
-            System.out.println("filling up the inventory");
-            System.out.println("|");
-
+            System.out.println("----- Filling Inventory -----");
             fillUpInventory(vendingMachine);
-            displayInventory(vendingMachine);
-
-            System.out.println("|");
-            System.out.println("clicking on InsertCoinButton");
-            System.out.println("|");
-
-            State vendingState = vendingMachine.getVendingMachineState();
-            vendingState.clickOnInsertCoinButton(vendingMachine);
-
-            vendingState = vendingMachine.getVendingMachineState();
-            vendingState.insertCoin(vendingMachine, Coin.NICKEL);
-            vendingState.insertCoin(vendingMachine, Coin.QUARTER);
-           // vendingState.insertCoin(vendingMachine, Coin.NICKEL);
-
-            System.out.println("|");
-            System.out.println("clicking on ProductSelectionButton");
-            System.out.println("|");
-            vendingState.clickOnStartProductSelectionButton(vendingMachine);
-
-            vendingState = vendingMachine.getVendingMachineState();
-            vendingState.chooseProduct(vendingMachine, 102);
 
             displayInventory(vendingMachine);
 
+            System.out.println("\n----- Inserting Coins -----");
+            vendingMachine.insertCoin(Coin.TEN);
+            vendingMachine.insertCoin(Coin.TWENTY_FIVE);
+
+            System.out.println("\n----- Selecting Product -----");
+            vendingMachine.selectItem(102);
+
+            System.out.println("\n----- Dispensing -----");
+            vendingMachine.dispense();      // Dispense item
+            vendingMachine.dispense();      // Return change (if any)
+
+            System.out.println("\n----- Final Inventory -----");
+            displayInventory(vendingMachine);
+
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e.getMessage());
         }
-        catch (Exception e){
-            displayInventory(vendingMachine);
-        }
-
-
     }
 
-    private static void fillUpInventory(VendingMachine vendingMachine){
-        ItemShelf[] slots = vendingMachine.getInventory().getInventory();
-        for (int i = 0; i < slots.length; i++) {
-            Item newItem = new Item();
-            if(i >=0 && i<3) {
-                newItem.setType(ItemType.COKE);
-                newItem.setPrice(12);
-            }else if(i >=3 && i<5){
-                newItem.setType(ItemType.PEPSI);
-                newItem.setPrice(9);
-            }else if(i >=5 && i<7){
-                newItem.setType(ItemType.JUICE);
-                newItem.setPrice(13);
-            }else if(i >=7 && i<10){
-                newItem.setType(ItemType.SODA);
-                newItem.setPrice(7);
+    private static void fillUpInventory(VendingMachine vendingMachine) {
+
+        ItemShelf[] shelves = vendingMachine.getInventory().getInventory();
+
+        for (int i = 0; i < shelves.length; i++) {
+
+            List<Item> items = new ArrayList<>();
+
+            Item item = new Item();
+
+            if (i < 1) {
+                item.setType(ItemType.COKE);
+                item.setPrice(12);
+            } else if (i < 2) {
+                item.setType(ItemType.PEPSI);
+                item.setPrice(9);
+            } else if (i < 3) {
+                item.setType(ItemType.JUICE);
+                item.setPrice(13);
+            } else {
+                item.setType(ItemType.SODA);
+                item.setPrice(7);
             }
-            slots[i].setItem(newItem);
-            slots[i].setSoldOut(false);
+
+            // Put 3 items in each shelf
+            items.add(item);
+            items.add(item);
+            items.add(item);
+
+            shelves[i].setItems(items);
+            shelves[i].setSoldOut(false);
         }
     }
 
-    private static void displayInventory(VendingMachine vendingMachine){
+    private static void displayInventory(VendingMachine vendingMachine) {
 
-        ItemShelf[] slots = vendingMachine.getInventory().getInventory();
-        for (int i = 0; i < slots.length; i++) {
+        ItemShelf[] shelves = vendingMachine.getInventory().getInventory();
 
-            System.out.println("CodeNumber: " + slots[i].getCode() +
-                    " Item: " + slots[i].getItem().getType().name() +
-                    " Price: " + slots[i].getItem().getPrice() +
-                    " isAvailable: " + !slots[i].isSoldOut());
+        System.out.println("\n----- Inventory State -----");
+        for (ItemShelf shelf : shelves) {
+
+            boolean available = !shelf.isSoldOut();
+            List<Item> items = shelf.getItems();
+            Item item = (items != null && !items.isEmpty()) ? items.get(0) : null;
+
+            System.out.println(
+                    "Code: " + shelf.getCode() +
+                            ", Item: " + (item != null ? item.getType() : "EMPTY") +
+                            ", Price: " + (item != null ? item.getPrice() : "-") +
+                            ", Available: " + available +
+                            ", Quantity: " + (item != null ? items.size() : 0)
+            );
         }
     }
 }

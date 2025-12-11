@@ -9,11 +9,11 @@ public class Main {
         //for example electricFactory class is responsible for creating object of bike(2 wheeler)
         // and car (4 wheeler) as well
 
-        ElectricVehicleFactor electricVehicleFactor = new ElectricVehicleFactor();
+        VehicleFactory electricVehicleFactor = new ElectricVehicleFactor();
         electricVehicleFactor.createBike().run();
         electricVehicleFactor.createCar().run();
 
-        PetrolVehicleFactory petrolVehicleFactory = new PetrolVehicleFactory();
+        VehicleFactory petrolVehicleFactory = new PetrolVehicleFactory();
         petrolVehicleFactory.createBike().run();
         petrolVehicleFactory.createCar().run();
     }

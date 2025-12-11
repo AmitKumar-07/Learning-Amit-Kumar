@@ -11,7 +11,7 @@ public class ErrorLogProcessor extends LogProcessor{
         if(logLevel == ERROR) {
             System.out.println("ERROR: " + message);
         } else{
-            super.log(logLevel, message);
+            nextLoggerProcessor.log(logLevel, message);
         }
 
     }

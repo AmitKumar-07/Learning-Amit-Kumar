@@ -4,5 +4,8 @@ public class Jump {
     int start;
     int end;
 
-    //getters and setters
+    Jump(int start, int end){
+        this.start = start;
+        this.end = end;
+    }
 }

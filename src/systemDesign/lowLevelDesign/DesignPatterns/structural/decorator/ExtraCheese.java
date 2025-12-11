@@ -8,7 +8,7 @@ public class ExtraCheese extends ToppingDecorator{
 
     @Override
     public double getCost() {
-        return tempPizza.getCost() + 2.5;
+        return super.getCost() + 2.5;
     }
 
     @Override

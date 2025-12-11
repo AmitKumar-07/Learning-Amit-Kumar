@@ -1,83 +1,76 @@
 package systemDesign.lowLevelDesign.problems.SnakeLadder;
 
+import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
-import java.util.LinkedList;
+import java.util.List;
 
 public class Game {
 
     Board board;
     Dice dice;
-    Deque<Player> playersList = new LinkedList<>();
-    Player winner;
+    Deque<Player> players;
 
-    public Game(){
+    public Game(List<Player> players, int size){
 
-        initializeGame();
+        this.players = new ArrayDeque<>(players);
+        initializeGame(size);
     }
 
-    private void initializeGame() {
-
-        board = new Board(10, 5,4);
-        dice = new Dice(1);
-        winner = null;
-        addPlayers();
+    private void initializeGame(int size) {
+        List<Jump> snakes = Arrays.asList(
+                new Jump(99, 21),
+                new Jump(56, 15),
+                new Jump(47, 9),
+                new Jump(85, 46),
+                new Jump(35, 5),
+                new Jump(38, 9),
+                new Jump(70, 42)
+        );
+        List<Jump> ladders = Arrays.asList(
+                new Jump(2, 38),
+                new Jump(8, 31),
+                new Jump(28, 84),
+                new Jump(71, 91)
+        );
+        board = new Board(size, snakes, ladders);
+        dice = new Dice();
     }
 
-    private void addPlayers() {
-        Player player1 = new Player("p1", 0);
-        Player player2 = new Player("p2", 0);
-        playersList.add(player1);
-        playersList.add(player2);
-    }
+    public void start() {
+        int finalCell = board.getSize() * board.getSize();
+        while (true) {
+            Player p = players.poll();
 
-    public void startGame(){
+            int roll = dice.rollDice();
+            System.out.println(p.getName() + " rolls " + roll);
 
-        while(winner == null) {
+            int next = p.getCurrentPosition() + roll;
 
-            //check whose turn now
-            Player playerTurn = findPlayerTurn();
-            System.out.println("player turn is:" + playerTurn.id + " current position is: " + playerTurn.currentPosition);
-
-            //roll the dice
-            int diceNumbers = dice.rollDice();
-
-            //get the new position
-            int playerNewPosition = playerTurn.currentPosition + diceNumbers;
-            playerNewPosition = jumpCheck(playerNewPosition);
-            playerTurn.currentPosition = playerNewPosition;
-
-            System.out.println("player turn is:" + playerTurn.id + " new Position is: " + playerNewPosition);
-            //check for winning condition
-            if(playerNewPosition >= board.cells.length * board.cells.length-1){
-
-                winner = playerTurn;
+            if (next > finalCell) {
+                System.out.println("Cannot move, stays at " + p.getCurrentPosition());
+                players.offer(p);
+                continue;
             }
 
+            int jumpPos = board.getNextPosition(next);
+            if (jumpPos != next) {
+                if (jumpPos > next)
+                    System.out.println("Ladder! Climb from " + next + " to " + jumpPos);
+                else
+                    System.out.println("Snake! Bite from " + next + " to " + jumpPos);
+            }
+
+            p.setCurrentPosition(jumpPos);
+            System.out.println(p.getName() + " moves to " + jumpPos);
+
+            if (jumpPos == finalCell) {
+                System.out.println(p.getName() + " wins the game!");
+                System.out.println(p.getName() + " wins!");
+                break;
+            }
+
+            players.offer(p);
         }
-
-        System.out.println("WINNER IS:" + winner.id);
-    }
-
-
-    private Player findPlayerTurn() {
-
-        Player playerTurns = playersList.removeFirst();
-        playersList.addLast(playerTurns);
-        return playerTurns;
-    }
-
-    private int jumpCheck (int playerNewPosition) {
-
-        if(playerNewPosition > board.cells.length * board.cells.length-1 ){
-            return playerNewPosition;
-        }
-
-        Cell cell = board.getCell(playerNewPosition);
-        if(cell.jump != null && cell.jump.start == playerNewPosition) {
-            String jumpBy = (cell.jump.start < cell.jump.end)? "ladder" : "snake";
-            System.out.println("jump done by: " + jumpBy);
-            return cell.jump.end;
-        }
-        return playerNewPosition;
     }
 }

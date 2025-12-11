@@ -1,0 +1,9 @@
+package systemDesign.lowLevelDesign.DesignPatterns.creational.factoryMethod.notificationService;
+
+public class PushNotification implements Notification{
+
+    @Override
+    public void sendNotification(String message) {
+        System.out.println("push: pushed successfully: "+ message);
+    }
+}

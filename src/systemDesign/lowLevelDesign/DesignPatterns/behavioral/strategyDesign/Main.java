@@ -1,11 +1,17 @@
 package systemDesign.lowLevelDesign.DesignPatterns.behavioral.strategyDesign;
 
-public class Main {
+import systemDesign.lowLevelDesign.DesignPatterns.behavioral.strategyDesign.strategy.CreditCardPayment;
+import systemDesign.lowLevelDesign.DesignPatterns.behavioral.strategyDesign.strategy.UPIPayment;
 
-    public static void main(String[] args){
-        Vehicle vehicle = new GoodsVehicle();
-        vehicle.drive();
-        vehicle = new OffRoadVehicle();
-        vehicle.drive();
+public class Main {
+    public static void main(String[] args) {
+
+        PaymentService paymentService = new PaymentService();
+
+        paymentService.setStrategy(new CreditCardPayment());
+        paymentService.doPayment(500);   // Card
+
+        paymentService.setStrategy(new UPIPayment());
+        paymentService.doPayment(300);   // UPI
     }
 }

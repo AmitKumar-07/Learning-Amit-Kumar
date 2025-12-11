@@ -1,90 +1,87 @@
 package systemDesign.lowLevelDesign.problems.CarRentalSystem;
 
-import systemDesign.lowLevelDesign.problems.CarRentalSystem.Product.Car;
-import systemDesign.lowLevelDesign.problems.CarRentalSystem.Product.Vehicle;
-import systemDesign.lowLevelDesign.problems.CarRentalSystem.Enum.VehicleType;
+import systemDesign.lowLevelDesign.problems.CarRentalSystem.Enums.BookingStatus;
+import systemDesign.lowLevelDesign.problems.CarRentalSystem.Enums.CarType;
+import systemDesign.lowLevelDesign.problems.CarRentalSystem.Enums.PaymentStatus;
+import systemDesign.lowLevelDesign.problems.CarRentalSystem.paymentStrategy.PaymentProcessor;
+import systemDesign.lowLevelDesign.problems.CarRentalSystem.paymentStrategy.UPIPayment;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Main {
+    public static void main(String[] args) {
 
-    public static void main(String args[]) {
+        //create inventory
+        System.out.println("Creating inventory, branches and cars");
+        InventoryManager inventory = new InventoryManager();
+        Branch b1 = new Branch(1, "Noida Sector 98", "Noida","201304");
+        Branch b2 = new Branch(2, "Bhadohi", "Maryad Patti","221401");
 
+        inventory.addBranch(b1);
+        inventory.addBranch(b2);
 
-        List<User> users = addUsers();
-        List<Vehicle> vehicles = addVehicles();
-        List<Store> stores = addStores(vehicles);
+        Car c1 = new Car(101, "UP16 AB 1234", CarType.SEDAN);
+        Car c2 = new Car(102, "UP16 XY 7777", CarType.SUV);
 
-        VehicleRentalSystem rentalSystem = new VehicleRentalSystem(stores, users);
+        inventory.addCarToBranch(1, c1);
+        inventory.addCarToBranch(2, c2);
 
-        //0. User comes
-        User user = users.get(0);
+        CarRentalSystem system = CarRentalSystem.getInstance(inventory);
 
-        //1. user search store based on location
-        Location location = new Location(403012, "Bangalore", "Karnataka", "India");
-        Store store = rentalSystem.getStore(location);
+        // Create users
+        User u = new User(1, "Amit Kumar", "DL-12345");
+        system.registerUser(u);
+        System.out.println("Registered User: "+ u);
 
-        //2. get All vehicles you are interested in (based upon different filters)
-        List<Vehicle> storeVehicles = store.getVehicles(VehicleType.CAR);
+        LocalDateTime start = LocalDateTime.now().plusHours(1);
+        LocalDateTime end = start.plusHours(4);
 
+        // Search Car
+        System.out.println("Searching cars");
+        List<Car> result = system.searchCars(2, CarType.SUV, start, end);
+        System.out.println("Available SUVs: " + result);
 
-        //3.reserving the particular vehicle
-       Reservation reservation = store.createReservation(storeVehicles.get(0), users.get(0));
+        System.out.println("Booking initiated");
+        Car selected = result.get(0); // suppose we choose first car
+        Booking booking = system.bookCar(u, selected, start, end);
 
-       //4. generate the bill
-        Bill bill = new Bill(reservation);
+        System.out.println("stared payment processing for booking: "+ booking);
+        PaymentProcessor processor = new PaymentProcessor();
+        Payment payment = processor.processPayment(booking, new UPIPayment());
+        if(payment.getStatus().equals(PaymentStatus.SUCCESS)){
+            booking.setStatus(BookingStatus.CONFIRMED);
+            System.out.println("Booking Confirmed: " + booking);
+        }else {
+            booking.setStatus(BookingStatus.FAILED);
+            System.out.println("Payment failed : " + booking);
+            System.out.println("Please Complete Payment");
+        }
 
-        //5. make payment
-        Payment payment = new Payment(bill);
-        payment.payBill();
-
-       //6. trip completed, submit the vehicle and close the reservation
-        store.completeReservation(reservation.reservationId);
-
+//        System.out.println("************************************");
+//
+//        LocalDateTime start1 = LocalDateTime.now().plusHours(5);
+//        LocalDateTime end1 = start1.plusHours(9);
+//
+//        // Search Car
+//        System.out.println("Searching cars");
+//        List<Car> result1 = system.searchCars(2, CarType.SUV, start1, end1);
+//        System.out.println("Available SUVs: " + result1);
+//
+//        System.out.println("Booking initiated");
+//        Car selected1 = result1.get(0); // suppose we choose first car
+//        Booking booking1 = system.bookCar(u, selected1, start1, end1);
+//
+//        System.out.println("stared payment processing for booking: "+ booking1);
+//        Payment payment1 = processor.processPayment(booking1, new UPIPayment());
+//        if(payment1.getStatus().equals(PaymentStatus.SUCCESS)){
+//            booking1.setStatus(BookingStatus.CONFIRMED);
+//            System.out.println("Booking Confirmed: " + booking1);
+//        }else {
+//            booking1.setStatus(BookingStatus.FAILED);
+//            System.out.println("Payment failed : " + booking1);
+//            System.out.println("Please Complete Payment");
+//        }
     }
-
-
-
-    public static List<Vehicle> addVehicles(){
-
-        List<Vehicle> vehicles = new ArrayList<>();
-
-        Vehicle vehicle1 = new Car();
-        vehicle1.setVehicleID(1);
-        vehicle1.setVehicleType(VehicleType.CAR);
-
-        Vehicle vehicle2 = new Car();
-        vehicle1.setVehicleID(2);
-        vehicle1.setVehicleType(VehicleType.CAR);
-
-        vehicles.add(vehicle1);
-        vehicles.add(vehicle2);
-
-        return vehicles;
-    }
-
-    public static List<User> addUsers(){
-
-        List<User> users = new ArrayList<>();
-        User user1 = new User();
-        user1.setUserId(1);
-
-        users.add(user1);
-        return users;
-    }
-
-    public static List<Store> addStores(List<Vehicle> vehicles){
-
-        List<Store> stores = new ArrayList<>();
-        Store store1 = new Store();
-        store1.storeId=1;
-        store1.setVehicles(vehicles);
-        Location location = new Location(403012, "Bangalore", "Karnataka", "India");
-        store1.setStoreLocation(location);
-
-        stores.add(store1);
-        return stores;
-    }
-
 }
+

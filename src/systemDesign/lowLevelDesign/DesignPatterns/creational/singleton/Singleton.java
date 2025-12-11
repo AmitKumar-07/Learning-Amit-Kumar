@@ -17,8 +17,4 @@ public class Singleton {
         }
         return instance;
     }
-
-    public void sum(int a, int b){
-        System.out.println("sum of "+a+" and "+b+" is equal to "+a+b);
-    }
 }

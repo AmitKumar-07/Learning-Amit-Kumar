@@ -1,62 +1,44 @@
 package systemDesign.lowLevelDesign.problems.DesignVendingMachine.VendingStates.impl;
 
-import systemDesign.lowLevelDesign.problems.DesignVendingMachine.Coin;
 import systemDesign.lowLevelDesign.problems.DesignVendingMachine.Item;
 import systemDesign.lowLevelDesign.problems.DesignVendingMachine.VendingMachine;
 import systemDesign.lowLevelDesign.problems.DesignVendingMachine.VendingStates.State;
-
-import java.util.List;
+import systemDesign.lowLevelDesign.problems.DesignVendingMachine.enums.Coin;
 
 public class DispenseState implements State {
 
-    DispenseState(VendingMachine machine, int codeNumber) throws Exception{
+    private final Item item;
 
-        System.out.println("Currently Vending machine is in DispenseState");
-        dispenseProduct(machine, codeNumber);
+    public DispenseState(Item item) {
+        this.item = item;
     }
 
     @Override
-    public void clickOnInsertCoinButton(VendingMachine machine) throws Exception{
-        throw new Exception("insert coin button can not clicked on Dispense state");
-    }
-
-    @Override
-    public void clickOnStartProductSelectionButton(VendingMachine machine) throws Exception {
-        throw new Exception("product selection buttion can not be clicked in Dispense state");
+    public void insertCoin(VendingMachine vm, Coin coin) {
 
     }
 
     @Override
-    public void insertCoin(VendingMachine machine, Coin coin) throws Exception{
-        throw new Exception("coin can not be inserted in Dispense state");
+    public void selectItem(VendingMachine vm, int code) {
+
     }
 
     @Override
-    public void chooseProduct(VendingMachine machine, int codeNumber) throws Exception{
-        throw new Exception("product can not be choosen in Dispense state");
-    }
+    public void dispense(VendingMachine vm) throws Exception {
 
-    @Override
-    public int getChange(int returnChangeMoney) throws Exception{
-        throw new Exception("change can not returned in Dispense state");
-    }
+        System.out.println("Dispensing: " + item.getType());
 
-    @Override
-    public List<Coin> refundFullMoney(VendingMachine machine) throws Exception{
-        throw new Exception("refund can not be happen in Dispense state");
-    }
+        int change = vm.getTotalMoney() - item.getPrice();
 
-    @Override
-    public Item dispenseProduct(VendingMachine machine, int codeNumber) throws Exception{
-        System.out.println("Product has been dispensed");
-        Item item = machine.getInventory().getItem(codeNumber);
-        machine.getInventory().updateSoldOutItem(codeNumber);
-        machine.setVendingMachineState(new IdleState(machine));
-        return item;
-    }
+        // Clear coins
+        vm.getCoinList().clear();
 
-    @Override
-    public void updateInventory(VendingMachine machine, Item item, int codeNumber) throws Exception {
-        throw new Exception("inventory can not be updated in Dispense state");
+        if (change > 0) {
+            System.out.println("Returning change: " + change);
+        }
+
+        // go back to idle
+        vm.setState(new IdleState());
+        System.out.println("Back to Idle State");
     }
 }

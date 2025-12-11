@@ -3,11 +3,11 @@ package systemDesign.lowLevelDesign.problems.TicTacToe.Model;
 public class Player {
 
     public String name;
-    public PlayingPiece playingPiece;
+    public Piece piece;
 
-    public Player(String name, PlayingPiece playingPiece) {
+    public Player(String name, Piece piece) {
         this.name = name;
-        this.playingPiece = playingPiece;
+        this.piece = piece;
     }
 
     public String getName() {
@@ -18,11 +18,11 @@ public class Player {
         this.name = name;
     }
 
-    public PlayingPiece getPlayingPiece() {
-        return playingPiece;
+    public Piece getPiece() {
+        return piece;
     }
 
-    public void setPlayingPiece(PlayingPiece playingPiece) {
-        this.playingPiece = playingPiece;
+    public void setPiece(Piece piece) {
+        this.piece = piece;
     }
 }

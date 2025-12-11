@@ -9,12 +9,12 @@ public abstract class LogProcessor {
     LogProcessor nextLoggerProcessor;
 
     LogProcessor(LogProcessor loggerProcessor) {
-
         this.nextLoggerProcessor = loggerProcessor;
     }
 
     public void log(int logLevel, String message) {
 
+        System.out.println("hello");
         if (nextLoggerProcessor != null) {
             nextLoggerProcessor.log(logLevel, message);
         }

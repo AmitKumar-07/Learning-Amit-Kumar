@@ -1,116 +1,71 @@
 package systemDesign.lowLevelDesign.problems.TicTacToe;
 
-
-import javafx.util.Pair;
 import systemDesign.lowLevelDesign.problems.TicTacToe.Model.*;
-
 import java.util.*;
 
 public class TicTacToeGame {
 
-    Deque<Player> players;
-    Board gameBoard;
+    private final Deque<Player> players;
+    private final Board board;
 
-
-    public void initializeGame(){
-
-        //creating 2 Players
+    public TicTacToeGame(List<Player> playersList) {
+        //creating players
         players = new ArrayDeque<>();
-        PlayingPieceX crossPiece = new PlayingPieceX();
-        Player player1 = new Player("Player1", crossPiece);
-
-        PlayingPieceO noughtsPiece = new PlayingPieceO();
-        Player player2 = new Player("Player2", noughtsPiece);
-
-        players.add(player1);
-        players.add(player2);
+        players.addAll(playersList);
 
         //initializeBoard
-        gameBoard = new Board(3);
+        board = new Board(3);
     }
 
-    public String startGame(){
+    public void startGame(){
 
-        boolean noWinner = true;
-        while(noWinner){
-
-            //take out the player whose turn is and also put the player in the list back
-            Player playerTurn = players.removeFirst();
-
-            //get the free space from the board
-            gameBoard.printBoard();
-            List<Pair<Integer, Integer>> freeSpaces =  gameBoard.getFreeCells();
-            if(freeSpaces.isEmpty()) {
-                noWinner = false;
-                continue;
-            }
-
-            //read the user input
-            System.out.print("Player:" + playerTurn.name + " Enter row,column: ");
-            Scanner inputScanner = new Scanner(System.in);
-            String s = inputScanner.nextLine();
-            String[] values = s.split(",");
-            int inputRow = Integer.valueOf(values[0]);
-            int inputColumn = Integer.valueOf(values[1]);
-
-
-            //place the piece
-            boolean pieceAddedSuccessfully = gameBoard.addPiece(inputRow,inputColumn, playerTurn.playingPiece);
-            if(!pieceAddedSuccessfully) {
-                //player can not insert the piece into this cell, player has to choose another cell
-                System.out.println("Incorrect position chosen, try again");
-                players.addFirst(playerTurn);
-                continue;
-            }
-            players.addLast(playerTurn);
-
-            boolean winner = isThereWinner(inputRow, inputColumn, playerTurn.playingPiece.pieceType);
-            if(winner) {
-                return playerTurn.name;
+        for(int i=0; i<players.size(); i++) {
+            Player player = players.removeFirst();
+            System.out.println("Player1 Name is "+ player.getName() +" and Symbol is " + player.getPiece());
+            players.addLast(player);
+        }
+        System.out.println("Let's start the game");
+        System.out.println("current position");
+        board.printBoard();
+        Scanner sc = new Scanner(System.in);
+        while(true){
+            Player player = players.removeFirst();
+            System.out.print(player.name +", Enter row and column (0-based): ");
+            int row = sc.nextInt();
+            int col = sc.nextInt();
+            boolean isGameEnd = play(row, col, player);
+            if(isGameEnd) {
+                sc.close();
+                break;
             }
         }
-
-        return "tie";
     }
 
-    public boolean isThereWinner(int row, int column, PieceType pieceType) {
 
-        boolean rowMatch = true;
-        boolean columnMatch = true;
-        boolean diagonalMatch = true;
-        boolean antiDiagonalMatch = true;
+    public boolean play(int row, int col, Player player) {
 
-        //need to check in row
-        for(int i=0;i<gameBoard.size;i++) {
-
-            if(gameBoard.board[row][i] == null || gameBoard.board[row][i].pieceType != pieceType) {
-                rowMatch = false;
-            }
+        if (!board.isValidMove(row, col)) {
+            System.out.println("Invalid move. Try again.");
+            players.addFirst(player);
+            return false;
         }
 
-        //need to check in column
-        for(int i=0;i<gameBoard.size;i++) {
+        board.makeMove(row, col, player.getPiece());
+        board.printBoard();
 
-            if(gameBoard.board[i][column] == null || gameBoard.board[i][column].pieceType != pieceType) {
-                columnMatch = false;
-            }
+        if (board.checkWinner(row, col, player.getPiece())) {
+            System.out.println(player.getName() + " wins!");
+            return true;
         }
 
-        //need to check diagonals
-        for(int i=0, j=0; i<gameBoard.size;i++,j++) {
-            if (gameBoard.board[i][j] == null || gameBoard.board[i][j].pieceType != pieceType) {
-                diagonalMatch = false;
-            }
+        if (board.isFull()) {
+            System.out.println("It's a draw!");
+            return true;
         }
 
-        //need to check anti-diagonals
-        for(int i=0, j=gameBoard.size-1; i<gameBoard.size;i++,j--) {
-            if (gameBoard.board[i][j] == null || gameBoard.board[i][j].pieceType != pieceType) {
-                antiDiagonalMatch = false;
-            }
-        }
-
-        return rowMatch || columnMatch || diagonalMatch || antiDiagonalMatch;
+        players.addLast(player);// switch turns
+        return false;
     }
+
 
 }

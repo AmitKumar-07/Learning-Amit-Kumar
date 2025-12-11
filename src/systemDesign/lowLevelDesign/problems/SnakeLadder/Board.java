@@ -1,69 +1,30 @@
 package systemDesign.lowLevelDesign.problems.SnakeLadder;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.List;
 
 public class Board {
 
-    Cell[][] cells;
+    int size;
+    List<Jump> snakes;
+    List<Jump> ladders;
 
-    Board(int boardSize, int numberOfSnakes, int numberOfLadders) {
-
-        initializeCells(boardSize);
-        addSnakesLadders(cells, numberOfSnakes, numberOfLadders);
+    Board(int size, List<Jump> snakes, List<Jump> ladders) {
+        this.size = size;
+        this.snakes = snakes;
+        this.ladders = ladders;
     }
 
-    private void initializeCells(int boardSize) {
-
-        cells = new Cell[boardSize][boardSize];
-
-        for(int i=0;i<boardSize;i++) {
-            for(int j=0; j<boardSize;j++) {
-                Cell cellObj = new Cell();
-                cells[i][j] = cellObj;
-            }
+    public int getNextPosition(int pos) {
+        for (Jump sn : snakes) {
+            if (sn.start == pos) return sn.end;
         }
-    }
-    private void addSnakesLadders(Cell[][] cells, int numberOfSnakes, int numberOfLadders){
-
-        while(numberOfSnakes > 0) {
-           int snakeHead = ThreadLocalRandom.current().nextInt(1,cells.length*cells.length-1);
-           int snakeTail = ThreadLocalRandom.current().nextInt(1,cells.length*cells.length-1);
-           if(snakeTail >= snakeHead) {
-               continue;
-           }
-
-           Jump snakeObj = new Jump();
-           snakeObj.start = snakeHead;
-           snakeObj.end = snakeTail;
-
-           Cell cell = getCell(snakeHead);
-           cell.jump = snakeObj;
-
-            numberOfSnakes--;
+        for (Jump ld : ladders) {
+            if (ld.start == pos) return ld.end;
         }
-
-        while(numberOfLadders > 0) {
-            int ladderStart = ThreadLocalRandom.current().nextInt(1,cells.length*cells.length-1);
-            int ladderEnd = ThreadLocalRandom.current().nextInt(1,cells.length*cells.length-1);
-            if(ladderStart >= ladderEnd) {
-                continue;
-            }
-
-            Jump ladderObj = new Jump();
-            ladderObj.start = ladderStart;
-            ladderObj.end = ladderEnd;
-
-            Cell cell = getCell(ladderStart);
-            cell.jump = ladderObj;
-
-            numberOfLadders--;
-        }
-
+        return pos;
     }
 
-    Cell getCell(int playerPosition) {
-        int boardRow = playerPosition / cells.length;
-        int boardColumn = (playerPosition % cells.length);
-        return cells[boardRow][boardColumn];
+    public int getSize() {
+        return size;
     }
 }

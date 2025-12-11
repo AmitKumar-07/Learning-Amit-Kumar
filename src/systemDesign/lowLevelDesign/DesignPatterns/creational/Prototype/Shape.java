@@ -1,6 +1,6 @@
 package systemDesign.lowLevelDesign.DesignPatterns.creational.Prototype;
 
-public class Shape implements Prototype {
+public class Shape implements Cloneable, Prototype {
     private String type;
     private String color;
 

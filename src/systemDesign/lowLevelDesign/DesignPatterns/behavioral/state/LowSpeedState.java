@@ -20,7 +20,6 @@ public class LowSpeedState implements FanState {
 
     @Override
     public void decreaseSpeed(Fan fan) {
-        System.out.println("Turning fan off.");
-        fan.setState(new OffState());
+        System.out.println("Fan is already at Low Speed.");
     }
 }

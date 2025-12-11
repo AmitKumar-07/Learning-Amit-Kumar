@@ -1,6 +1,5 @@
 package systemDesign.lowLevelDesign.DesignPatterns.structural.decorator;
 
-// Concrete Decorator: Cheese
 class Cheese extends ToppingDecorator {
     public Cheese(Pizza pizza) {
         super(pizza);

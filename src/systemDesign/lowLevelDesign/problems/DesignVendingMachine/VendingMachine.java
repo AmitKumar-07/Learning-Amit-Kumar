@@ -2,43 +2,61 @@ package systemDesign.lowLevelDesign.problems.DesignVendingMachine;
 
 import systemDesign.lowLevelDesign.problems.DesignVendingMachine.VendingStates.State;
 import systemDesign.lowLevelDesign.problems.DesignVendingMachine.VendingStates.impl.IdleState;
+import systemDesign.lowLevelDesign.problems.DesignVendingMachine.enums.Coin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VendingMachine {
 
-    private State vendingMachineState;
-    private Inventory inventory;
-    private List<Coin> coinList;
+    private State state;
+    private final Inventory inventory;
+    private final List<Coin> coinList;
+    private int selectedCode;
 
-    public VendingMachine(){
-        vendingMachineState = new IdleState();
-        inventory = new Inventory(10);
-        coinList = new ArrayList<>();
+    public VendingMachine() {
+        this.state = new IdleState();
+        this.inventory = new Inventory(4);
+        this.coinList = new ArrayList<>();
     }
 
-    public State getVendingMachineState() {
-        return vendingMachineState;
+    public void insertCoin(Coin coin) throws Exception {
+        state.insertCoin(this, coin);
     }
 
-    public void setVendingMachineState(State vendingMachineState) {
-        this.vendingMachineState = vendingMachineState;
+    public void setState(State state) {
+        this.state = state;
     }
 
     public Inventory getInventory() {
         return inventory;
     }
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
+    public int getSelectedCode() {
+        return selectedCode;
+    }
+
+    public void setSelectedCode(int selectedCode) {
+        this.selectedCode = selectedCode;
     }
 
     public List<Coin> getCoinList() {
         return coinList;
     }
 
-    public void setCoinList(List<Coin> coinList) {
-        this.coinList = coinList;
+    public void addCoin(Coin coin) {
+        this.coinList.add(coin);
+    }
+
+    public int getTotalMoney() {
+        return coinList.stream().mapToInt(coin-> coin.getValue()).sum();
+    }
+
+    public void selectItem(int code) throws Exception {
+        state.selectItem(this, code);
+    }
+
+    public void dispense() throws Exception {
+        state.dispense(this);
     }
 }

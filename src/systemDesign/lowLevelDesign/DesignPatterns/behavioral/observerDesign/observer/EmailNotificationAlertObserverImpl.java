@@ -14,10 +14,7 @@ public class EmailNotificationAlertObserverImpl implements NotificationAlertObse
     @Override
     public void update() {
         System.out.println("Total "+ stockObservable.getStock()+ " "+ stockObservable.getStockName()+" is in stock, Please hurry up!!");
-        senEmail(emailId);
-    }
-
-    void senEmail(String emailId){
         System.out.println("Mail Has been sent to "+ emailId);
     }
+
 }

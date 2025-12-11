@@ -1,5 +1,7 @@
 package systemDesign.lowLevelDesign.problems.ElevatorDesign;
 
+import systemDesign.lowLevelDesign.problems.ElevatorDesign.enums.Direction;
+
 public class ElevatorDisplay {
 
     int floor;

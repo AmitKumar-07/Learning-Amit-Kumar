@@ -47,7 +47,6 @@ public class ATMRoom {
         bankAccount.balance = 3000;
 
         return bankAccount;
-
     }
 
 }

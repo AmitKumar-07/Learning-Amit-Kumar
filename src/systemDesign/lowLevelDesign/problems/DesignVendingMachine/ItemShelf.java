@@ -1,10 +1,19 @@
 package systemDesign.lowLevelDesign.problems.DesignVendingMachine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemShelf {
 
     int code;
-    Item item;
+    private List<Item> items;
     boolean soldOut;
+
+    public ItemShelf(int code){
+        this.code = code;
+        this.items = new ArrayList<>();
+        this.soldOut = true;
+    }
 
     public int getCode() {
         return code;
@@ -14,12 +23,15 @@ public class ItemShelf {
         this.code = code;
     }
 
-    public Item getItem() {
-        return item;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItems(List<Item> items) {
+        this.items = items;
+        if(items != null && !items.isEmpty()) {
+            this.soldOut = false;
+        }
     }
 
     public boolean isSoldOut() {

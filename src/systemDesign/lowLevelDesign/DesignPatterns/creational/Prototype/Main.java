@@ -7,6 +7,7 @@ public class Main {
 
         // Clone the object
         Shape clonedCircle = circle.clone();
+
         System.out.println("Cloned Object: " + clonedCircle);
         // Modify the cloned object
         clonedCircle.setColor("Blue");

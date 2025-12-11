@@ -15,10 +15,6 @@ public class MobileNotificationAlertObserverImpl implements NotificationAlertObs
     @Override
     public void update() {
         System.out.println("Total "+ stockObservable.getStock()+ " "+ stockObservable.getStockName()+" is in stock, Please hurry up!!");
-        sendMessage(mobileNo);
-    }
-
-    void sendMessage(String mobileNo){
         System.out.println("Message has been sent to "+mobileNo);
     }
 }

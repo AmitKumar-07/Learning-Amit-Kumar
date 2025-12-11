@@ -1,32 +1,36 @@
 package systemDesign.lowLevelDesign.problems.CarRentalSystem;
 
+
 public class User {
 
-    int userId;
-    int userName;
-    int drivingLicense;
+    private int userId;
+    private String name;
+    private String drivingLicenseNo;
+
+    public User(int userId, String name, String drivingLicenseNo) {
+        this.userId = userId;
+        this.name = name;
+        this.drivingLicenseNo = drivingLicenseNo;
+    }
 
     public int getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public String getName() {
+        return name;
     }
 
-    public int getUserName() {
-        return userName;
+    public String getDrivingLicenseNo() {
+        return drivingLicenseNo;
     }
 
-    public void setUserName(int userName) {
-        this.userName = userName;
-    }
-
-    public int getDrivingLicense() {
-        return drivingLicense;
-    }
-
-    public void setDrivingLicense(int drivingLicense) {
-        this.drivingLicense = drivingLicense;
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", drivingLicenseNo='" + drivingLicenseNo + '\'' +
+                '}';
     }
 }
