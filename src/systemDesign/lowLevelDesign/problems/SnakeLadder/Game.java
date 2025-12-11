@@ -66,7 +66,6 @@ public class Game {
 
             if (jumpPos == finalCell) {
                 System.out.println(p.getName() + " wins the game!");
-                System.out.println(p.getName() + " wins!");
                 break;
             }
 

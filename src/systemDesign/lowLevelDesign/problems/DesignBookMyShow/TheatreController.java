@@ -26,7 +26,6 @@ public class TheatreController {
         cityVsTheatre.put(city, theatres);
     }
 
-
     Map<Theatre, List<Show>> getAllShow(Movie movie, City city) {
 
         //get all the theater of this city along with their shows

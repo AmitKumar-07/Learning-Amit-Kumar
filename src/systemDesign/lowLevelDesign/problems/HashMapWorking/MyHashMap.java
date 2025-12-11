@@ -2,30 +2,30 @@ package systemDesign.lowLevelDesign.problems.HashMapWorking;
 
 public class MyHashMap<K,V> {
 
-    private static final int  INITIAL_SIZE = 1<<4; //16
-    private static final int MAXIMUM_CAPACITY = 1 << 30;
+//    private static final int  INITIAL_SIZE = 1<<4; //16
+//    private static final int MAXIMUM_CAPACITY = 1 << 30;
 
     Entry[] hashTable;
 
-    MyHashMap(){
-        hashTable= new Entry[INITIAL_SIZE];
+    MyHashMap(int size){
+        hashTable= new Entry[size];
     }
 
-    MyHashMap(int capacity) {
-        int tableSize = tableSizeFor(capacity);
-        hashTable= new Entry[tableSize];
-    }
-
-    final int tableSizeFor(int cap) {
-        int n = cap - 1;
-        n |= n >>> 1;
-        n |= n >>> 2;
-        n |= n >>> 4;
-        n |= n >>> 8;
-        n |= n >>> 16;
-        return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
-    }
-
+//    optional
+//    MyHashMap(int capacity) {
+//        int tableSize = tableSizeFor(capacity);
+//        hashTable= new Entry[tableSize];
+//    }
+//
+//    final int tableSizeFor(int cap) {
+//        int n = cap - 1;
+//        n |= n >>> 1;
+//        n |= n >>> 2;
+//        n |= n >>> 4;
+//        n |= n >>> 8;
+//        n |= n >>> 16;
+//        return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+//    }
 
     static class Entry<K,V>{
 
@@ -37,7 +37,6 @@ public class MyHashMap<K,V> {
             key = k;
             value = v;
         }
-
 
         public K getKey() {
             return key;
@@ -55,7 +54,6 @@ public class MyHashMap<K,V> {
             this.value = value;
         }
     }
-
 
     public void put(K key, V value) {
 
@@ -82,7 +80,6 @@ public class MyHashMap<K,V> {
         }
     }
 
-
     public V get(K key) {
 
         int hashCode = key.hashCode() % hashTable.length;
@@ -99,8 +96,6 @@ public class MyHashMap<K,V> {
 
     public static void main(String[] args) {
 
-        MyHashMap<String, String> mapString = new MyHashMap<>();
-        mapString.put("name", "Amit");
         MyHashMap<Integer, String> map = new MyHashMap<>(7);
         map.put(1, "hi");
         map.put(2, "my");

@@ -38,7 +38,6 @@ public class BookingService {
                 .mapToDouble(showSeat -> showSeat.getPrice())
                 .sum();
         booking.setTotalAmount(total);
-
         return booking;
     }
 }

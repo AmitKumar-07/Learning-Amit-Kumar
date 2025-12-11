@@ -10,7 +10,6 @@ public class SharedResource {
         while(hasData){
             wait();
         }
-
         data = value;
         hasData = true;
         System.out.println(data+" : data produced for thread: "+Thread.currentThread().getName());
@@ -21,7 +20,6 @@ public class SharedResource {
         while(!hasData){
             wait();
         }
-
         System.out.println(data + " : data consumed by thread: " + Thread.currentThread().getName());
         hasData = false;
         notify();

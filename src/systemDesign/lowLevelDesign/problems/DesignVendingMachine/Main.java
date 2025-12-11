@@ -74,7 +74,6 @@ public class Main {
     private static void displayInventory(VendingMachine vendingMachine) {
 
         ItemShelf[] shelves = vendingMachine.getInventory().getInventory();
-
         System.out.println("\n----- Inventory State -----");
         for (ItemShelf shelf : shelves) {
 
@@ -83,10 +82,8 @@ public class Main {
             Item item = (items != null && !items.isEmpty()) ? items.get(0) : null;
 
             System.out.println(
-                    "Code: " + shelf.getCode() +
-                            ", Item: " + (item != null ? item.getType() : "EMPTY") +
-                            ", Price: " + (item != null ? item.getPrice() : "-") +
-                            ", Available: " + available +
+                    "Code: " + shelf.getCode() + ", Item: " + (item != null ? item.getType() : "EMPTY") +
+                            ", Price: " + (item != null ? item.getPrice() : "-") + ", Available: " + available +
                             ", Quantity: " + (item != null ? items.size() : 0)
             );
         }
