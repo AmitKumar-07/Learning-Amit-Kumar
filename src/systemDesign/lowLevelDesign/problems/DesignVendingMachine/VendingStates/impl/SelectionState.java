@@ -1,11 +1,8 @@
 package systemDesign.lowLevelDesign.problems.DesignVendingMachine.VendingStates.impl;
 
-import systemDesign.lowLevelDesign.problems.DesignVendingMachine.enums.Coin;
 import systemDesign.lowLevelDesign.problems.DesignVendingMachine.Item;
 import systemDesign.lowLevelDesign.problems.DesignVendingMachine.VendingMachine;
 import systemDesign.lowLevelDesign.problems.DesignVendingMachine.VendingStates.State;
-
-import java.util.List;
 
 public class SelectionState implements State {
 
@@ -38,8 +35,9 @@ public class SelectionState implements State {
 
         System.out.println("Money sufficient. Proceeding to dispense item.");
 
-        // Move to next state
+        // Move to next state and immediately dispense
         vm.setState(new DispenseState(item));
+        vm.dispense();  // Automatically trigger dispense in the new state
     }
 
 }

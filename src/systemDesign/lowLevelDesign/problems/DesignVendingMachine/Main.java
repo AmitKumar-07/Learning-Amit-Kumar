@@ -26,8 +26,7 @@ public class Main {
             vendingMachine.selectItem(102);
 
             System.out.println("\n----- Dispensing -----");
-            vendingMachine.dispense();      // Dispense item
-            vendingMachine.dispense();      // Return change (if any)
+            vendingMachine.dispense();      // Dispense item and return change (if any)
 
             System.out.println("\n----- Final Inventory -----");
             displayInventory(vendingMachine);
