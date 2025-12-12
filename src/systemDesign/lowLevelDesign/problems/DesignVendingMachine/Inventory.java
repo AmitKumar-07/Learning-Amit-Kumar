@@ -27,16 +27,6 @@ public class Inventory {
         }
     }
 
-    // Add multiple items to a shelf
-    public void addItem(List<Item> items, int codeNumber) throws Exception {
-        ItemShelf shelf = findShelf(codeNumber);
-
-        if (shelf == null) {
-            throw new Exception("Invalid Code Entered!!");
-        }
-        shelf.setItems(items);
-    }
-
     // Dispense one item
     public Item getItem(int codeNumber) throws Exception {
         ItemShelf shelf = findShelf(codeNumber);
@@ -63,13 +53,6 @@ public class Inventory {
         }
 
         return item;
-    }
-
-    public void updateSoldOutItem(int codeNumber) {
-        ItemShelf shelf = findShelf(codeNumber);
-        if (shelf != null) {
-            shelf.setSoldOut(true);
-        }
     }
 
     private ItemShelf findShelf(int codeNumber) {

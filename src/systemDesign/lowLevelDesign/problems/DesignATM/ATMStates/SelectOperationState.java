@@ -24,7 +24,6 @@ public class SelectOperationState extends ATMState{
                 System.out.println("Invalid Option");
                 exit(atmObject);
             }
-
         }
     }
 

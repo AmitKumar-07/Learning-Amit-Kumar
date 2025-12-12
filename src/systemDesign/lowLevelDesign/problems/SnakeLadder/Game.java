@@ -24,7 +24,6 @@ public class Game {
                 new Jump(47, 9),
                 new Jump(85, 46),
                 new Jump(35, 5),
-                new Jump(38, 9),
                 new Jump(70, 42)
         );
         List<Jump> ladders = Arrays.asList(

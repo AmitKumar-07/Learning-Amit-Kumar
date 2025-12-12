@@ -4,17 +4,8 @@ public class ATMRoom {
     ATM atm;
     User user;
 
-    public static void main(String args[]) {
-
-        ATMRoom atmRoom = new ATMRoom();
-        atmRoom.initialize();
-
-        atmRoom.atm.printCurrentATMStatus();
-        atmRoom.atm.getCurrentATMState().insertCard(atmRoom.atm, atmRoom.user.card);
-        atmRoom.atm.getCurrentATMState().authenticatePin(atmRoom.atm, atmRoom.user.card, 112211);
-        atmRoom.atm.getCurrentATMState().selectOperation(atmRoom.atm, atmRoom.user.card, TransactionType.CASH_WITHDRAWAL);
-        atmRoom.atm.getCurrentATMState().cashWithdrawal(atmRoom.atm, atmRoom.user.card, 1900);
-        atmRoom.atm.printCurrentATMStatus();
+    public ATMRoom(){
+        initialize();
     }
 
     private void initialize() {
