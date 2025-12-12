@@ -1,7 +1,6 @@
 package systemDesign.lowLevelDesign.problems.CarRentalSystem;
 
 import systemDesign.lowLevelDesign.problems.CarRentalSystem.Enums.BookingStatus;
-import systemDesign.lowLevelDesign.problems.CarRentalSystem.Enums.CarStatus;
 import systemDesign.lowLevelDesign.problems.CarRentalSystem.pricingStrategy.PricingStrategy;
 import systemDesign.lowLevelDesign.problems.CarRentalSystem.pricingStrategy.PricingStrategyFactory;
 

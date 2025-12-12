@@ -18,6 +18,22 @@ public class Branch {
         this.cars = new ArrayList<>();
     }
 
+    public void addCar(Car car) {
+        // Remove car from previous branch if any
+        if (car.getBranch() != null && car.getBranch() != this) {
+            car.getBranch().removeCar(car);
+        }
+        cars.add(car);
+        car.setBranch(this);
+    }
+
+    public void removeCar(Car car) {
+        cars.remove(car);
+        if (car.getBranch() == this) {
+            car.setBranch(null);
+        }
+    }
+
     public int getBranchId() {
         return branchId;
     }
@@ -32,11 +48,6 @@ public class Branch {
 
     public List<Car> getCars() {
         return cars;
-    }
-
-    public void addCar(Car car) {
-        cars.add(car);
-        car.setBranch(this);
     }
 
     public String getPincode() {
