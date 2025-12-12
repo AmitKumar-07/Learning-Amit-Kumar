@@ -1,6 +1,5 @@
 package systemDesign.lowLevelDesign.problems.CarRentalSystem;
 
-
 public class User {
 
     private int userId;

@@ -15,7 +15,7 @@ public class Main {
         system.handleInternalRequest(1, 4); // Inside elevator 0, someone pressed floor 4 & 7
         system.handleInternalRequest(1, 7);
 
-        // --- Simulate movement for 10 time steps ---
+        // --- Simulate movement for 15 time steps ---
         for (int i = 0; i < 15; i++) {
             system.step();
 
@@ -36,7 +36,6 @@ public class Main {
             System.out.println("---------------------------------------");
         }
 
-
         /*Elevator Algo
         ✅ 1. SCAN Algorithm (when clicked from inside the elevator): Elevator moves in one direction, serves all requests on the way,
         then reverses direction — like scanning floors. This avoids back-tracking & zig-zag movement.
@@ -47,7 +46,6 @@ public class Main {
         Distance from request floor
         Choose the elevator closest to that floor and already moving towards it. If none are moving correctly, pick the nearest idle one.
 
-
         SCAN/LOOK only decides the order, NOT actual movement. If SCAN does not move the elevator, then who moves it?
         step() and updateDirection() = Simulation Engine, These methods are NOT the algorithm They are just “execution engine” to simulate movement.
         ✔ What does step() do?
@@ -55,7 +53,7 @@ public class Main {
             Decrement (if going down)
             Check if this floor is in stop list → open door
             Remove that stop
-            Ask updateDirection() if direction should change
+            Ask updateDirection() if direction needs to be changed
         ✔ What does updateDirection() do?
         It checks:
             Are there more UP stops? continue UP

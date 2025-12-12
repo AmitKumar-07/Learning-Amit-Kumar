@@ -1,7 +1,6 @@
 package systemDesign.lowLevelDesign.problems.ElevatorDesign;
 
 import systemDesign.lowLevelDesign.problems.ElevatorDesign.enums.Direction;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class ElevatorSystem {
 
     // called when someone presses hall button at a floor
     public void handleExternalRequest(int floor, Direction direction) {
-        if (floor < 0 || floor > totalFloors) {
+        if (floor < 0 || floor > totalFloors) { //in real case, User can see valid floor only
             System.out.println(floor + " is Invalid floor");
             return;
         }

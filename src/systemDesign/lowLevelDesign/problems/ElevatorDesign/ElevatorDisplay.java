@@ -13,7 +13,6 @@ public class ElevatorDisplay {
     }
 
     public void showDisplay(){
-        System.out.println(floor);
-        System.out.println(direction);
+        System.out.println("Floor : " + floor + ", Direction : " + direction);
     }
 }

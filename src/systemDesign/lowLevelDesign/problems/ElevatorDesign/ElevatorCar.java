@@ -12,7 +12,6 @@ public class ElevatorCar {
     private int maxFloor;
     private Direction direction;
     private ElevatorState state;
-
     // floors to stop while going up / down
     private TreeSet<Integer> upStops = new TreeSet<>();
     private TreeSet<Integer> downStops = new TreeSet<>((a, b) -> b - a);
@@ -95,8 +94,6 @@ public class ElevatorCar {
                 direction = Direction.UP;
             } else if (!downStops.isEmpty()) {
                 direction = Direction.DOWN;
-            } else {
-                direction = Direction.IDLE; // nothing to do
             }
         }
     }
@@ -104,8 +101,9 @@ public class ElevatorCar {
     // Simulate one time-step movement
     public void step() throws Exception {
 
-        if (direction == Direction.IDLE)
+        if (direction == Direction.IDLE) {
             return;
+        }
 
         // Boundary protection (optional for LOOK)
         if (direction == Direction.UP && currentFloor == maxFloor) {
@@ -129,7 +127,6 @@ public class ElevatorCar {
                 upStops.remove(currentFloor);
             }
         }
-
         else if (direction == Direction.DOWN) {
             currentFloor--;
 
@@ -138,7 +135,6 @@ public class ElevatorCar {
                 downStops.remove(currentFloor);
             }
         }
-
         // Recalculate direction using LOOK logic
         updateDirection();
     }

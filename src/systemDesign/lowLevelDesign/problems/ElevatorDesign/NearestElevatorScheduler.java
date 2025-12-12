@@ -1,7 +1,6 @@
 package systemDesign.lowLevelDesign.problems.ElevatorDesign;
 
 import systemDesign.lowLevelDesign.problems.ElevatorDesign.enums.Direction;
-
 import java.util.List;
 
 public class NearestElevatorScheduler implements ElevatorScheduler {
@@ -10,17 +9,14 @@ public class NearestElevatorScheduler implements ElevatorScheduler {
     public ElevatorCar selectElevator(FloorRequest request, List<ElevatorCar> cars) {
         int reqFloor = request.getFloor();
         Direction reqDir = request.getDirection();
-
         ElevatorCar best = null;
         int bestScore = Integer.MAX_VALUE;
-
         for (ElevatorCar car : cars) {
 
             int dist = Math.abs(car.getCurrentFloor() - reqFloor), score;
-
             // CASE 1: Car moving towards the request floor
-            if (car.getDirection() == reqDir && ((reqDir == Direction.UP && car.getCurrentFloor() <= reqFloor) ||
-                            (reqDir == Direction.DOWN && car.getCurrentFloor() >= reqFloor))) {
+            if (car.getDirection() == reqDir && ((reqDir == Direction.UP && car.getCurrentFloor() <= reqFloor)
+                    || (reqDir == Direction.DOWN && car.getCurrentFloor() >= reqFloor))) {
                 score = dist;  // best case
             } else if (car.getDirection() == Direction.IDLE) {
                 score = dist + 2; // little worse than moving-towards
@@ -33,7 +29,6 @@ public class NearestElevatorScheduler implements ElevatorScheduler {
                 best = car;
             }
         }
-
         return best;
     }
 }

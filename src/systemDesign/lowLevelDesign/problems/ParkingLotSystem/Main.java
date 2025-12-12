@@ -58,7 +58,7 @@ public class Main {
             Thread.sleep(2000);  // 2 seconds (as if the car was parked)
         } catch (Exception ignored) {}
 
-        // 5. Vehicle Exits
+        // 5. Vehicle Exits : User can choose any available exist gate (exitGate1 or exitGate2)
         System.out.println("\nCar exiting...");
         Payment payment = exitGate2.processExit(ticket.getTicketId(), PaymentMode.UPI);
 
