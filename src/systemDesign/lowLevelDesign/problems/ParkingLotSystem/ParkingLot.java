@@ -13,9 +13,7 @@ public class ParkingLot {
     private List<ParkingFloor> floors = new ArrayList<>();
     private SpotAssignmentStrategy spotAssignmentStrategy;
     private ParkingFeeCalculator feeCalculator;
-
-    // ticketId -> Ticket
-    private Map<String, Ticket> activeTickets = new HashMap<>();
+    private Map<String, Ticket> activeTickets = new HashMap<>(); // ticketId -> Ticket
 
     private ParkingLot(String name,
                        SpotAssignmentStrategy spotAssignmentStrategy,
@@ -72,13 +70,5 @@ public class ParkingLot {
         ticket.setExitGateId(gateId);
         activeTickets.remove(ticketId);
         return payment;
-    }
-
-    public List<ParkingFloor> getFloors() {
-        return floors;
-    }
-
-    public String getName(){
-        return name;
     }
 }

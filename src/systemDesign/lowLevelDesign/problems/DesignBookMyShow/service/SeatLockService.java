@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class SeatLockService {
 
-    private final Map<ShowSeat, SeatLock> locks = new HashMap<>();
+    private final Map<String, SeatLock> locks = new HashMap<>(); // Key: ShowSeat.id
     private final long lockTimeoutSeconds = 300; // 5 minutes
 
     public synchronized boolean lockSeats(User user, List<ShowSeat> seats) {
@@ -24,19 +24,19 @@ public class SeatLockService {
 
         for (ShowSeat s : seats) {
             SeatLock lock = new SeatLock(s, user, now, now.plusSeconds(lockTimeoutSeconds));
-            locks.put(s, lock);
+            locks.put(s.getId(), lock);
             s.setStatus(SeatStatus.LOCKED);
         }
         return true;
     }
 
-    public boolean isSeatLocked(ShowSeat seat) {
-        SeatLock lock = locks.get(seat);
+    private boolean isSeatLocked(ShowSeat seat) {
+        SeatLock lock = locks.get(seat.getId());
         if (lock == null) return false;
 
         // check expiry
         if (lock.getExpiryTime().isBefore(LocalDateTime.now())) {
-            locks.remove(seat);
+            locks.remove(seat.getId());
             seat.setStatus(SeatStatus.AVAILABLE);
             return false;
         }

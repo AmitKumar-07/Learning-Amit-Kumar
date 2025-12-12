@@ -36,7 +36,6 @@ public class ATMRoom {
 
         UserBankAccount bankAccount = new UserBankAccount();
         bankAccount.balance = 3000;
-
         return bankAccount;
     }
 

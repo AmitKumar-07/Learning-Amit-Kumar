@@ -20,7 +20,6 @@ public class HourlyParkingFeeCalculator implements ParkingFeeCalculator {
         LocalDateTime out = LocalDateTime.now();
 
         long minutes = Duration.between(in, out).toMinutes();
-        System.out.println(minutes);
         long hours = (long) Math.ceil(minutes / 60.0);
 
         if(hours <= 3){

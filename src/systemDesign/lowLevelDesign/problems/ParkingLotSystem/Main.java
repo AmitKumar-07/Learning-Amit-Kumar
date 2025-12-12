@@ -19,6 +19,7 @@ public class Main {
 
         // 2. Create Floors + Spots
         ParkingFloor floor1 = new ParkingFloor("F1");
+        ParkingFloor floor2 = new ParkingFloor("F2");
 
         //car spots
         floor1.addSpot(new ParkingSpot("C1", SpotType.CAR));
@@ -29,10 +30,11 @@ public class Main {
         floor1.addSpot(new ParkingSpot("B2", SpotType.BIKE));
 
         //Truck spots
-        floor1.addSpot(new ParkingSpot("T1", SpotType.TRUCK));
-        floor1.addSpot(new ParkingSpot("T2", SpotType.TRUCK));
+        floor2.addSpot(new ParkingSpot("T1", SpotType.TRUCK));
+        floor2.addSpot(new ParkingSpot("T2", SpotType.TRUCK));
 
         parkingLot.addFloor(floor1);
+        parkingLot.addFloor(floor2);
 
         // 3. Gates: Entry & Exist gates are independent to parking lot object
         EntryGate entryGate = new EntryGate("Entry-1");
