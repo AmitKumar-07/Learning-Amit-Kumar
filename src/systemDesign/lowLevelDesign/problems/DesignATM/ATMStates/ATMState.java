@@ -26,11 +26,10 @@ public abstract class ATMState {
         System.out.println("OOPS!! Something went wrong");
     }
 
-    public void returnCard(){
-        System.out.println("OOPS!! Something went wrong");
-    }
-
+    // Common method - handles card return and state transition to Idle
     public void exit(ATM atm){
-        System.out.println("OOPS!! Something went wrong");
+        System.out.println("Please collect your card");
+        atm.setCurrentATMState(new IdleState());
+        System.out.println("Exit happens");
     }
 }
