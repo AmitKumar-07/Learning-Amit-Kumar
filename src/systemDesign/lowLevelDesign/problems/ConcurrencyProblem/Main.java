@@ -1,4 +1,4 @@
-package systemDesign.lowLevelDesign.problems.ProducerConsumerProblem;
+package systemDesign.lowLevelDesign.problems.ConcurrencyProblem;
 
 public class Main {
 
