@@ -36,7 +36,7 @@ class ZeroOnePrinter {
     }
 }
 
-class Main {
+class Main2 {
     public static void main(String[] args) {
 
         ZeroOnePrinter printer = new ZeroOnePrinter(5);

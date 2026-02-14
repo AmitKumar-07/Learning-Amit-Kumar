@@ -8,7 +8,6 @@ import java.util.*;
 
 public class ParkingLot {
     private static ParkingLot instance;
-
     private String name;
     private List<ParkingFloor> floors = new ArrayList<>();
     private SpotAssignmentStrategy spotAssignmentStrategy;
@@ -43,6 +42,8 @@ public class ParkingLot {
     }
 
     public Ticket parkVehicle(Vehicle vehicle, String gateId) {
+        System.out.println("Parking Lot Name : "+ this.name);
+
         ParkingSpot spot = spotAssignmentStrategy.findSpot(vehicle, floors);
         if (spot == null) {
             throw new RuntimeException("No spot available");

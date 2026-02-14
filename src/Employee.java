@@ -11,16 +11,25 @@ public class Employee {
         this.salary = salary;
     }
 
+
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(name, employee.name);
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+
+        if(obj == null || this.getClass() != obj.getClass()){
+            return false;
+        }
+
+        Employee emp = (Employee) obj;
+        return Objects.equals(emp.name, this.name) && Objects.equals(emp.department, this.department)
+                && Objects.equals(emp.salary, this.salary);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hash(name, department, salary);
     }
 
     public String getName() {

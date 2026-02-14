@@ -2,37 +2,17 @@ package systemDesign.lowLevelDesign.problems.HashMapWorking;
 
 public class MyHashMap<K,V> {
 
-//    private static final int  INITIAL_SIZE = 1<<4; //16
-//    private static final int MAXIMUM_CAPACITY = 1 << 30;
-
+    private static final int size = 1<<4; //16
     Entry[] hashTable;
-
-    MyHashMap(int size){
+    MyHashMap(){
         hashTable= new Entry[size];
     }
-
-//    optional
-//    MyHashMap(int capacity) {
-//        int tableSize = tableSizeFor(capacity);
-//        hashTable= new Entry[tableSize];
-//    }
-//
-//    final int tableSizeFor(int cap) {
-//        int n = cap - 1;
-//        n |= n >>> 1;
-//        n |= n >>> 2;
-//        n |= n >>> 4;
-//        n |= n >>> 8;
-//        n |= n >>> 16;
-//        return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
-//    }
 
     static class Entry<K,V>{
 
         K key;
         V value;
         Entry next;
-
         Entry(K k, V v) {
             key = k;
             value = v;
@@ -41,15 +21,12 @@ public class MyHashMap<K,V> {
         public K getKey() {
             return key;
         }
-
         public void setKey(K key) {
             this.key = key;
         }
-
         public V getValue() {
             return value;
         }
-
         public void setValue(V value) {
             this.value = value;
         }
@@ -57,34 +34,29 @@ public class MyHashMap<K,V> {
 
     public void put(K key, V value) {
 
-        int hashCode = key.hashCode() % hashTable.length;
+        int hashCode =(size - 1) & (key.hashCode() ^ key.hashCode() >>> 16);
         Entry node = hashTable[hashCode];
-
         if(node == null) {
-
             Entry newNode = new Entry(key, value);
             hashTable[hashCode] = newNode;
         } else {
             Entry previousNode = node;
             while (node != null) {
-
-                if (node.key == key) {
+                if (node.key.equals(key)) {
                     node.value = value;
                     return;
                 }
                 previousNode = node;
                 node = node.next;
             }
-            Entry newNode = new Entry(key, value);
-            previousNode.next = newNode;
+            previousNode.next = new Entry(key, value);
         }
     }
 
     public V get(K key) {
 
-        int hashCode = key.hashCode() % hashTable.length;
+        int hashCode = (size - 1) & (key.hashCode() ^ key.hashCode() >>> 16);
         Entry node = hashTable[hashCode];
-
         while(node != null) {
             if(node.key.equals(key)) {
                 return (V)node.value;
@@ -96,7 +68,7 @@ public class MyHashMap<K,V> {
 
     public static void main(String[] args) {
 
-        MyHashMap<Integer, String> map = new MyHashMap<>(7);
+        MyHashMap<Integer, String> map = new MyHashMap<>();
         map.put(1, "hi");
         map.put(2, "my");
         map.put(3, "name");

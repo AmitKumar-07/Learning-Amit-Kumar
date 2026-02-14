@@ -47,6 +47,8 @@ public class Main {
         System.out.println("Car arriving...");
 
         Ticket ticket = entryGate.generateTicket(car);
+        entryGate.generateTicket(car);
+        entryGate.generateTicket(car);
 
         System.out.println("Ticket issued:");
         System.out.println("Ticket ID = " + ticket.getTicketId());

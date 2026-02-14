@@ -1,5 +1,4 @@
 package systemDesign.lowLevelDesign.DesignPatterns.behavioral.strategyDesign;
-
 import systemDesign.lowLevelDesign.DesignPatterns.behavioral.strategyDesign.strategy.PaymentStrategy;
 
 public class PaymentService {
